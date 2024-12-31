@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("visible") private var visible: Bool = true
+    
     @StateObject private var neko = Neko()
     
     var body: some View {
         Group {
-            Image(nsImage: neko.image)
+            if visible {
+                Image(nsImage: neko.image)
+            }
         }
         .onAppear {
             if let window = NSApp.windows.first {
@@ -36,6 +40,13 @@ struct ContentView: View {
         .onChange(of: neko.position) {
             if let window = NSApp.windows.first {
                 window.setFrameOrigin(neko.position)
+            }
+        }
+        .onChange(of: visible) {
+            if visible {
+                neko.resume()
+            } else {
+                neko.pause()
             }
         }
     }

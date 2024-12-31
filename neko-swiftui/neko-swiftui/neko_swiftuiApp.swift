@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct neko_swiftuiApp: App {
+    @AppStorage("visible") private var visible: Bool = true
+    
     @ObservedObject private var launchAtLogin = SettingsManager.launchAtLogin
     
     var body: some Scene {
@@ -17,6 +19,14 @@ struct neko_swiftuiApp: App {
         }
         
         MenuBarExtra("Neko", image: "MenubarIcon") {
+            Button {
+                visible.toggle()
+            } label: {
+                Text(visible ? "Hide Neko" : "Show Neko")
+            }
+            
+            Divider()
+            
             Menu("Settings") {
                 Toggle("Launch at login", isOn: $launchAtLogin.enabled)
             }
