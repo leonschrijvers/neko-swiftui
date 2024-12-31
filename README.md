@@ -11,6 +11,10 @@ Some added bonus features for a better user experience:
 - Launch at login functionality
 - Temporary hide Neko
 
+## Demo
+
+![Neko-demo](resources/neko-demo.gif)
+
 ## Acknowledgements
 
 This work is inspired by other implementations of Neko:
