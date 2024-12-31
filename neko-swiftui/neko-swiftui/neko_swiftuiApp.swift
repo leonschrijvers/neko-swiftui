@@ -13,5 +13,13 @@ struct neko_swiftuiApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        MenuBarExtra("Neko", image: "MenubarIcon") {
+            Button {
+                exit(0)
+            } label: {
+                Text("Quit")
+            }
+        }
     }
 }
