@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct neko_swiftuiApp: App {
+    @Environment(\.openWindow) var openWindow
+    
     @AppStorage("visible") private var visible: Bool = true
     
     @ObservedObject private var launchAtLogin = SettingsManager.launchAtLogin
@@ -19,6 +21,15 @@ struct neko_swiftuiApp: App {
         }
         
         MenuBarExtra("Neko", image: "MenubarIcon") {
+            Button {
+                NSApp.activate(ignoringOtherApps: true)
+                openWindow(id: "AboutWindow")
+            } label: {
+                Text("About neko-swiftui")
+            }
+            
+            Divider()
+            
             Button {
                 visible.toggle()
             } label: {
@@ -39,5 +50,11 @@ struct neko_swiftuiApp: App {
                 Text("Quit")
             }
         }
+        
+        Window("About", id: "AboutWindow") {
+            AboutView()
+                .fixedSize()
+        }
+        .windowResizability(.contentSize)
     }
 }
