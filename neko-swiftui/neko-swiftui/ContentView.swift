@@ -8,14 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var neko = Neko()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            Image(nsImage: neko.image)
         }
-        .padding()
+        .onAppear {
+            if let window = NSApp.windows.first {
+                window.styleMask = [.borderless]
+                window.level = .popUpMenu
+                window.isOpaque = false
+                window.canHide = false
+                window.ignoresMouseEvents = true
+                window.isMovableByWindowBackground = false
+                window.hidesOnDeactivate = false
+                window.setFrame(NSRect(x: 0, y: 0, width: NekoImages.size, height: NekoImages.size), display: false)
+                window.center()
+                window.backgroundColor = .clear
+                window.collectionBehavior = [.canJoinAllSpaces, .stationary, .fullScreenNone]
+                window.hasShadow = false
+                
+                neko.setPosition(position: window.frame.origin)
+                neko.resume()
+            }
+        }
+        .onChange(of: neko.position) {
+            if let window = NSApp.windows.first {
+                window.setFrameOrigin(neko.position)
+            }
+        }
     }
 }
 
